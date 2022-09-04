@@ -1,0 +1,14 @@
+
+apply from: "$buildGradlePath/build-library-demo.gradle"
+
+
+dependencies {
+
+    implementation project(":statelayout")
+
+    implementation "io.coil-kt:coil:2.1.0"
+    implementation "io.coil-kt:coil-gif:2.1.0"
+
+    implementation "io.github.scwang90:refresh-layout-kernel:2.0.5"
+    implementation "io.github.scwang90:refresh-header-classics:2.0.5"
+}
