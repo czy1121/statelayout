@@ -50,7 +50,7 @@ class SimpleState(
         when (state) {
             // image, text
             STATE_LOADING -> if (showLoading == null) {
-                layout.showStateView<SimpleStateView>().apply {
+                layout.showStateView<SimpleStateView>()?.apply {
                     setHeightMatchParent()
                     setText(loadingTextResId)
                     setImage(loadingImageResId)
@@ -61,7 +61,7 @@ class SimpleState(
             }
             // image, text, retry
             STATE_ERROR -> if (showError == null) {
-                layout.showStateView<SimpleStateView>().apply {
+                layout.showStateView<SimpleStateView>()?.apply {
                     setHeightMatchParent()
                     setText(errorTextResId)
                     setImage(errorImageResId)
@@ -72,7 +72,7 @@ class SimpleState(
             }
             // image, text
             STATE_EMPTY -> if (showEmpty == null) {
-                layout.showStateView<SimpleStateView>().apply {
+                layout.showStateView<SimpleStateView>()?.apply {
                     setHeightMatchParent()
                     setText(emptyTextResId)
                     setImage(emptyImageResId)

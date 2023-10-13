@@ -1,9 +1,6 @@
 package me.reezy.cosmo.statelayout
 
 import android.content.Context
-import android.graphics.drawable.Animatable
-import android.graphics.drawable.Animatable2
-import android.graphics.drawable.AnimatedImageDrawable
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout

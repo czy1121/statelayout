@@ -12,6 +12,7 @@ import androidx.annotation.RestrictTo
 
 class StateLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : FrameLayout(context, attrs, defStyle) {
 
+
     private var vContent: View? = null
 
     private val views = mutableMapOf<Any, View>()
@@ -23,24 +24,29 @@ class StateLayout @JvmOverloads constructor(context: Context, attrs: AttributeSe
         transition.setAnimator(LayoutTransition.DISAPPEARING,  ObjectAnimator.ofFloat(null, View.ALPHA, 1f, 0f))
 
         layoutTransition = transition
+
+        if (layoutParams == null) {
+            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        }
     }
 
-    fun <V : View> showStateView(clazz: Class<V>): V {
+    fun <V : View> showStateView(clazz: Class<V>): V? {
+        @Suppress("UNCHECKED_CAST")
         return showStateView(clazz) {
             clazz.getConstructor(Context::class.java).newInstance(context)
-        } as V
+        } as? V
     }
 
-    inline fun <reified V : View> showStateView(): V {
+    inline fun <reified V : View> showStateView(): V? {
         return showStateView(V::class.java) {
             V::class.java.getConstructor(Context::class.java).newInstance(context)
-        } as V
+        } as? V
     }
 
-    inline fun <reified V : View> showStateView(@LayoutRes layoutResId: Int): V {
+    inline fun <reified V : View> showStateView(@LayoutRes layoutResId: Int): V? {
         return showStateView(layoutResId) {
             LayoutInflater.from(context).inflate(layoutResId, this)
-        } as V
+        } as? V
     }
 
     @RestrictTo(RestrictTo.Scope.LIBRARY)
