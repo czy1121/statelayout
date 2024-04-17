@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.annotation.RestrictTo
 
+@Suppress("UNCHECKED_CAST")
 class StateLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : FrameLayout(context, attrs, defStyle) {
 
 
@@ -30,28 +31,23 @@ class StateLayout @JvmOverloads constructor(context: Context, attrs: AttributeSe
         }
     }
 
-    fun <V : View> showStateView(clazz: Class<V>): V? {
-        @Suppress("UNCHECKED_CAST")
-        return showStateView(clazz) {
+    inline fun <reified V : View> showStateView(key: Any = V::class.java): V? {
+        return showStateView(V::class.java, key)
+    }
+
+    fun <V : View> showStateView(clazz: Class<V>, key: Any = clazz): V? {
+        return showStateView(key) {
             clazz.getConstructor(Context::class.java).newInstance(context)
         } as? V
     }
 
-    inline fun <reified V : View> showStateView(): V? {
-        return showStateView(V::class.java) {
-            V::class.java.getConstructor(Context::class.java).newInstance(context)
+     fun <V : View> showStateView(@LayoutRes layoutResId: Int, key: Any = layoutResId): V? {
+        return showStateView(key) {
+            LayoutInflater.from(context).inflate(layoutResId, this, false)
         } as? V
     }
 
-    inline fun <reified V : View> showStateView(@LayoutRes layoutResId: Int): V? {
-        return showStateView(layoutResId) {
-            LayoutInflater.from(context).inflate(layoutResId, this)
-        } as? V
-    }
-
-    @RestrictTo(RestrictTo.Scope.LIBRARY)
-    @PublishedApi
-    internal fun showStateView(key: Any, create: () -> View): View {
+    private fun showStateView(key: Any, create: () -> View): View {
 
 
         visibility = View.VISIBLE

@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     init {
         SimpleState.defaultShowLoading = {
-            it.showStateView<LoadingStateView>().apply {
+            it.showStateView<LoadingStateView>()?.apply {
                 vImage.load(R.mipmap.loading)
             }
         }
